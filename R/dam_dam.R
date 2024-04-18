@@ -1,20 +1,18 @@
 #' @title Compute numerator relationship coefficients between two groups of dams
 #'
-#' @param ped : A data frame with the first columns being ID, SIRE, and DAM.
-#' Missing parents (SIRE and DAM) are denoted as 0.
+#' @param ped : A data frame with integer columns corresponding to ID, SIRE, and DAM. IDs should be sequential, starting from 1. Missing parents (SIRE and DAM) are denoted as 0.
 #' @param set1 : A set of dam IDs.
-#' @param set2 : A set of dam IDs, distict from `set1`.
+#' @param set2 : A set of dam IDs, distinct from `set1`.
 #'
-#' @return : Numerator relationship coefficients between `set1` and `set2` individuals.
+#' @return : Numerator relationship coefficients between `set1` and `set2` individuals in the form of a matrix.
 #' @export
 #'
 #' @examples
-#' message("TODO:")
+#' message("TODO: Write example(s).")
 #'
 dam_dam <- function(ped, set1, set2) {
     # Check ped
-    ped <- ped[, 1:3]
-    if (!identical(colnames(ped), c("ID", "SIRE", "DAM"))) stop("The first three colnames of ped should be ID, SIRE, and DAM.")
+    if (any(!c("ID", "SIRE", "DAM") %in% colnames(ped))) stop("The pedigree data frame should contain ID, SIRE, and DAM columns.")
     if (any(is.na(ped))) stop("Found NA in the pedigree.")
     if (any(ped$ID == 0)) stop("Found 0 in ped$ID.")
     if (nrow(ped[duplicated(ped$ID), ]) > 0) stop("Found duplicates in ped$ID.")
@@ -32,7 +30,8 @@ dam_dam <- function(ped, set1, set2) {
     if (length(set2[duplicated(set2)]) > 0) stop("Found duplicates in set2.")
     if (any(!set2 %in% dams)) stop("Found element(s) of set2 not in dams.")
     if (any(set1 %in% set2)) stop("Found an overlap between set1 and set2.")
-    # TODO: Begin the process.
-    output <- matrix(1) # DELETE
+    # TODO: Continue writting the script.
+    ped <- ped[, c("ID", "SIRE", "DAM")]
+    output <- matrix(1)
     return(output)
 }

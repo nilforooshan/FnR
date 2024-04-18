@@ -7,20 +7,19 @@
 sire_sire(ped, set1, set2)
 }
 \arguments{
-\item{ped}{: A data frame with the first columns being ID, SIRE, and DAM.
-Missing parents (SIRE and DAM) are denoted as 0.}
+\item{ped}{: A data frame with integer columns corresponding to ID, SIRE, and DAM. IDs should be sequential, starting from 1. Missing parents (SIRE and DAM) are denoted as 0.}
 
 \item{set1}{: A set of sire IDs.}
 
-\item{set2}{: A set of sire IDs, distict from \code{set1}.}
+\item{set2}{: A set of sire IDs, distinct from \code{set1}.}
 }
 \value{
-: Numerator relationship coefficients between \code{set1} and \code{set2} individuals.
+: Numerator relationship coefficients between \code{set1} and \code{set2} individuals in the form of a matrix.
 }
 \description{
 Compute numerator relationship coefficients between two groups of sires
 }
 \examples{
-message("TODO:")
+message("TODO: Write example(s).")
 
 }

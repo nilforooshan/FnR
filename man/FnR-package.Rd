@@ -8,6 +8,14 @@
 \description{
 Compute inbreeding coefficients using the method of Meuwissen and Luo (1992) \doi{ 10.1186/1297-9686-24-4-305}, and numerator relationship coefficients between individuals using the method of Van Vleck (2007) <PMID:18050089>.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/nilforooshan/FnR}
+  \item Report bugs at \url{https://github.com/nilforooshan/FnR/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Mohammad Ali Nilforooshan \email{m.a.nilforooshan@gmail.com} (\href{https://orcid.org/0000-0003-0339-5442}{ORCID})
 

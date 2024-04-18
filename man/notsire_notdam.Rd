@@ -7,20 +7,19 @@
 notsire_notdam(ped, notsire, notdam)
 }
 \arguments{
-\item{ped}{: A data frame with the first columns being ID, SIRE, and DAM.
-Missing parents (SIRE and DAM) are denoted as 0.}
+\item{ped}{: A data frame with integer columns corresponding to ID, SIRE, and DAM. IDs should be sequential, starting from 1. Missing parents (SIRE and DAM) are denoted as 0.}
 
 \item{notsire}{: A set of individual IDs that cannot be found among \code{ped$SIRE}.}
 
-\item{notdam}{: A set of individual IDs (distict from \code{notsire}) that cannot be found among \code{ped$DAM}.}
+\item{notdam}{: A set of individual IDs (distinct from \code{notsire}) that cannot be found among \code{ped$DAM}.}
 }
 \value{
-: Numerator relationship coefficients between \code{notsire} and \code{notdam} individuals.
+: Numerator relationship coefficients between \code{notsire} and \code{notdam} individuals in the form of a matrix.
 }
 \description{
 Compute numerator relationship coefficients between non-sires and non-dams
 }
 \examples{
-message("TODO:")
+message("TODO: Write example(s).")
 
 }

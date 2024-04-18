@@ -1,20 +1,18 @@
 #' @title Compute numerator relationship coefficients between non-sires and non-dams
 #'
-#' @param ped : A data frame with the first columns being ID, SIRE, and DAM.
-#' Missing parents (SIRE and DAM) are denoted as 0.
+#' @param ped : A data frame with integer columns corresponding to ID, SIRE, and DAM. IDs should be sequential, starting from 1. Missing parents (SIRE and DAM) are denoted as 0.
 #' @param notsire : A set of individual IDs that cannot be found among `ped$SIRE`.
-#' @param notdam : A set of individual IDs (distict from `notsire`) that cannot be found among `ped$DAM`.
+#' @param notdam : A set of individual IDs (distinct from `notsire`) that cannot be found among `ped$DAM`.
 #'
-#' @return : Numerator relationship coefficients between `notsire` and `notdam` individuals.
+#' @return : Numerator relationship coefficients between `notsire` and `notdam` individuals in the form of a matrix.
 #' @export
 #'
 #' @examples
-#' message("TODO:")
+#' message("TODO: Write example(s).")
 #'
 notsire_notdam <- function(ped, notsire, notdam) {
     # Check ped
-    ped <- ped[, 1:3]
-    if (!identical(colnames(ped), c("ID", "SIRE", "DAM"))) stop("The first three colnames of ped should be ID, SIRE, and DAM.")
+    if (any(!c("ID", "SIRE", "DAM") %in% colnames(ped))) stop("The pedigree data frame should contain ID, SIRE, and DAM columns.")
     if (any(is.na(ped))) stop("Found NA in the pedigree.")
     if (any(ped$ID == 0)) stop("Found 0 in ped$ID.")
     if (nrow(ped[duplicated(ped$ID), ]) > 0) stop("Found duplicates in ped$ID.")
@@ -34,7 +32,8 @@ notsire_notdam <- function(ped, notsire, notdam) {
     if (any(notdam %in% dams)) stop("Found dam(s) in notdam.")
     if (any(!notdam %in% ped$ID)) stop("Found element(s) of notdam not in ped$ID.")
     if (any(notsire %in% notdam)) stop("Found an overlap between notsire and notdam.")
-    # TODO: Begin the process.
-    output <- matrix(1) # DELETE
+    # TODO: Continue writting the script.
+    ped <- ped[, c("ID", "SIRE", "DAM")]
+    output <- matrix(1)
     return(output)
 }
