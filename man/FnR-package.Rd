@@ -6,7 +6,7 @@
 \alias{FnR-package}
 \title{FnR: Inbreeding and Numerator Relationship Coefficients}
 \description{
-Compute inbreeding coefficients using the method of Meuwissen and Luo (1992) \doi{ 10.1186/1297-9686-24-4-305}, and numerator relationship coefficients between individuals using the method of Van Vleck (2007) <PMID:18050089>.
+Compute inbreeding coefficients using the method of Meuwissen and Luo (1992) \doi{ 10.1186/1297-9686-24-4-305}, and numerator relationship coefficients between individuals using the method of Van Vleck (2007) \url{https://pubmed.ncbi.nlm.nih.gov/18050089/}.
 }
 \seealso{
 Useful links:

@@ -16,5 +16,48 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(FnR)
-message("TODO: Write a good vignette.")
 ```
+
+Let's use the following example pedigree.
+
+![](ped.PNG)
+
+```{r}
+(ped <- data.frame(
+  ID = 1:12,
+  SIRE = c(0, 0, 0, 2, 2, 0, 4, 6, 0, 6, 10, 10),
+  DAM = c(0, 0, 0, 1, 1, 0, 3, 5, 7, 8, 9, 0)
+))
+```
+
+R package "FnR" imports function `inbreed` from R package "ggroups" for calculating inbreeding coefficients.
+
+```{r}
+ggroups::inbreed(ped)
+```
+
+Let's calculate the numerator relationship coefficients between two groups of animals, one's members not among dams, and the members of the other not among sires.
+
+```{r}
+calcR(ped, set1 = c(12, 6), set2 = c(11, 8), type = "notdam-notsire")
+```
+
+What is the inbreeding coefficient of a future progeny of 11 and 12?
+It is half of the relationship coefficient between the two individuals (0.320312/2).
+
+Since `"notdam-notsire"` is the default type, `type = "notdam-notsire"` might be omitted.
+Where relationship coefficients between dams and between sires are needed, `type = "dam-dam"` and `type = "sire-sire"` are used, respectively.
+
+Let's calculate the numerator relationship coefficients between dam 7 and dams 8 and 9.
+
+```{r}
+calcR(ped, set1 = 7, set2 = 8:9, type = "dam-dam")
+```
+
+The relationship coefficients between sires 2 & 6 and sires 4 & 10 are calculated as:
+
+```{r}
+calcR(ped, set1 = c(2, 6), set2 = c(4, 10), type = "sire-sire")
+```
+
+For very large pedigree and small `set1` and `set2`, one may consider extracting a sub-pedigree by tracing the pedigree upward from `set1` and `set2` (*i.e.*, `ggroups::pedup(ped, c(set1, set2))`).
