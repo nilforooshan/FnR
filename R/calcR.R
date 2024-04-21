@@ -83,6 +83,7 @@ calcR <- function(ped, set1, set2, type = "notdam-notsire") {
     F_coef <- ggroups::inbreed(ped)
     names(F_coef) <- ped$ID
     # Calculate the relationship matrix
+    message("Calculating numerator relationship coefficients based on Van Vleck (2007)")
     R <- matrix(0, nrow = length(set1), ncol = length(set2), dimnames = list(set1, set2))
     tmp$F <- F_coef[(length(F_coef) - nrow(tmp) + 1):length(F_coef)]
     tmp$rnum <- match(tmp$SIRE, rownames(R))

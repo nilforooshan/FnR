@@ -10,7 +10,6 @@
 <!-- badges: end -->
 
 FnR ("F" stands for inbreeding coefficient and "R" stands for the numerator relationship coefficient) is an R package for the estimation of inbreeding coefficients of animals in the pedigree or their future progeny, and numerator relationship coefficients between pairs of individuals.
-This work is adopted from the article [Van Vleck (2007)](https://pubmed.ncbi.nlm.nih.gov/18050089/).
 
 ## Installation
 
@@ -69,6 +68,7 @@ calcR(ped, set1 = c(12, 6), set2 = c(11, 8), type = "notdam-notsire")
 
 ```
 Estimating inbreeding coefficients based on Meuwissen and Luo (1992)
+Calculating numerator relationship coefficients based on Van Vleck (2007)
           11     8
 12 0.3203125 0.375
 6  0.3750000 0.500
@@ -88,6 +88,7 @@ calcR(ped, set1 = 7, set2 = 8:9, type = "dam-dam")
 
 ```
 Estimating inbreeding coefficients based on Meuwissen and Luo (1992)
+Calculating numerator relationship coefficients based on Van Vleck (2007)
       8   9
 7 0.125 0.5
 ```
@@ -100,6 +101,7 @@ calcR(ped, set1 = c(2, 6), set2 = c(4, 10), type = "sire-sire")
 
 ```
 Estimating inbreeding coefficients based on Meuwissen and Luo (1992)
+Calculating numerator relationship coefficients based on Van Vleck (2007)
     4    10
 2 0.5 0.125
 6 0.0 0.750
