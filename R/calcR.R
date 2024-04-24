@@ -21,18 +21,15 @@
 #'     DAM = c(0, 0, 0, 1, 1, 0, 3, 5, 7, 8, 9, 0)
 #' )
 #'
-#' # Example 1: Calculate inbreeding coefficients.
-#' ggroups::inbreed(ped)
-#'
-#' # Example 2: Calculate relationship coefficients between two groups of animals,
+#' # Example 1: Calculate relationship coefficients between two groups of animals,
 #' # one's members not among dams, and the members of the other not among sires.
 #' calcR(ped, set1 = c(12, 6), set2 = c(11, 8), type = "notdam-notsire")
 #' # Since `"notdam-notsire"` is the default type, `type = "notdam-notsire"` might be omitted.
 #'
-#' # Example 3: Calculate relationship coefficients between dam 7 and dams 8 and 9.
+#' # Example 2: Calculate relationship coefficients between dam 7 and dams 8 and 9.
 #' calcR(ped, set1 = 7, set2 = 8:9, type = "dam-dam")
 #'
-#' # Example 4: Calculate relationship coefficients between sires 2 & 6 and sires 4 & 10.
+#' # Example 3: Calculate relationship coefficients between sires 2 & 6 and sires 4 & 10.
 #' calcR(ped, set1 = c(2, 6), set2 = c(4, 10), type = "sire-sire")
 #'
 calcR <- function(ped, set1, set2, type = "notdam-notsire") {
@@ -80,14 +77,14 @@ calcR <- function(ped, set1, set2, type = "notdam-notsire") {
     )
     ped <- rbind(ped, tmp)
     # Calculate inbreeding coefficients
-    F_coef <- ggroups::inbreed(ped)
-    names(F_coef) <- ped$ID
+    f <- resume_inbreed(ped)
+    names(f) <- ped$ID
     # Calculate the relationship matrix
     message("Calculating numerator relationship coefficients based on Van Vleck (2007)")
     R <- matrix(0, nrow = length(set1), ncol = length(set2), dimnames = list(set1, set2))
-    tmp$F <- F_coef[(length(F_coef) - nrow(tmp) + 1):length(F_coef)]
+    tmp$f <- f[(length(f) - nrow(tmp) + 1):length(f)]
     tmp$rnum <- match(tmp$SIRE, rownames(R))
     tmp$cnum <- match(tmp$DAM, colnames(R))
-    R[as.matrix(tmp[, c("rnum", "cnum")])] <- tmp$F * 2
+    R[as.matrix(tmp[, c("rnum", "cnum")])] <- tmp$f * 2
     return(R)
 }

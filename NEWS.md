@@ -1,3 +1,3 @@
 # FnR (development version)
 
-* In development
+- Initial submission to CRAN.

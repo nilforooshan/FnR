@@ -49,15 +49,49 @@ Let's use the following example pedigree.
 12 12   10   0
 ```
 
-R package "FnR" imports function `inbreed` from R package "ggroups" for calculating inbreeding coefficients.
+Let's assume that previously, 9 of 12 animals were in the pedigree, and inbreeding (`f`) and `d` coefficients (diagonal elements of the diagonal matrix **D** in $\mathbf A = \mathbf{TDT}'$) were calculated and saved.
 
 ```r
-ggroups::inbreed(ped)
+oldped <- ped[1:9, ]
+(oldrun <- resume_inbreed(oldped, export_d = TRUE))
 ```
 
 ```
-Estimating inbreeding coefficients based on Meuwissen and Luo (1992)
- [1] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.250000 0.015625 0.000000
+$f
+[1] 0 0 0 0 0 0 0 0 0
+
+$d
+[1] 1.00 1.00 1.00 0.50 0.50 1.00 0.50 0.50 0.75
+```
+
+Calculating inbreeding coefficients as if `f` and `d` coefficients from the previous analysis are not available:
+
+```r
+resume_inbreed(ped)
+```
+
+```
+[1] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.250000 0.015625 0.000000
+```
+
+Calculating inbreeding coefficients as if `f` coefficients from the previous analysis are available, but not `d` coefficients:
+
+```r
+resume_inbreed(ped, f = oldrun$f)
+```
+
+```
+[1] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.250000 0.015625 0.000000
+```
+
+Calculating inbreeding coefficients as if `f` and `d` coefficients from the previous analysis are available:
+
+```r
+resume_inbreed(ped, f = oldrun$f, d = oldrun$d)
+```
+
+```
+[1] 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.250000 0.015625 0.000000
 ```
 
 Let's calculate the numerator relationship coefficients between two groups of animals, one's members not among dams, and the members of the other not among sires.
