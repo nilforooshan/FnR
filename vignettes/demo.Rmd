@@ -79,4 +79,15 @@ The relationship coefficients between sires 2 & 6 and sires 4 & 10 are calculate
 calcR(ped, set1 = c(2, 6), set2 = c(4, 10), type = "sire-sire")
 ```
 
+If inbreeding coefficients of the population or previous inbreeding estimates with a smaller pedigree are available, those can be used via the argument `f` to speed up the procedure.
+Similarly, if **d** coefficients are available, those can be used alongside the inbreeding coefficients via the argument `d`.
+
+```{r}
+f <- rep(0, 12)
+f[10] <- 0.25
+f[11] <- 0.015625
+d <- c(1, 1, 1, 0.5, 0.5, 1, 0.5, 0.5, 0.75, 0.5, 0.4375, 0.6875)
+calcR(ped, set1 = c(2, 6), set2 = c(4, 10), type = "sire-sire", f = f, d = d)
+```
+
 For very large pedigree and small `set1` and `set2`, one may consider extracting a sub-pedigree by tracing the pedigree upward from `set1` and `set2` (*i.e.*, `ggroups::pedup(ped, c(set1, set2))`).

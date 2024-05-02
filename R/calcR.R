@@ -9,6 +9,12 @@
 #'  \item{\code{"sire-sire"}}{requires `set1` and `set2` individuals to be members of `ped$SIRE`.}
 #'  \item{\code{"dam-dam"}}{requires `set1` and `set2` individuals to be members of `ped$DAM`.}
 #' }
+#' @param f : (Optional) If available, the vector of inbreeding coefficients for the whole pedigree (without dummy progeny) or
+#' from the previous calculation of inbreeding coefficients with less number of animals in the pedigree.
+#' @param d : (Optional) If available, the vector of the diagonal elements of the diagonal matrix \bold{D} in \eqn{\mathbf A = \mathbf{TDT}'}
+#' where \bold{A} is the numerator relationship matrix,
+#' for the whole pedigree (without dummy progeny) or
+#' from the previous calculation of inbreeding coefficients with less number of animals in the pedigree.
 #'
 #' @return : Numerator relationship coefficients between `set1` and `set2` individuals in the form of a matrix (a partition of the numerator relationship matrix \bold{A}).
 #' @export
@@ -32,14 +38,29 @@
 #' # Example 3: Calculate relationship coefficients between sires 2 & 6 and sires 4 & 10.
 #' calcR(ped, set1 = c(2, 6), set2 = c(4, 10), type = "sire-sire")
 #'
-calcR <- function(ped, set1, set2, type = "notdam-notsire") {
+#' # Example 5: Repeat example 2 with inbreeding coefficients provided.
+#' f <- rep(0, 12)
+#' f[10] <- 0.25
+#' f[11] <- 0.015625
+#' calcR(ped, set1 = 7, set2 = 8:9, type = "dam-dam", f = f)
+#'
+#' # Example 6: Repeat example 3 with inbreeding and d coefficients provided.
+#' d <- c(1, 1, 1, 0.5, 0.5, 1, 0.5, 0.5, 0.75, 0.5, 0.4375, 0.6875)
+#' calcR(ped, set1 = c(2, 6), set2 = c(4, 10), type = "sire-sire", f = f, d = d)
+#'
+calcR <- function(ped, set1, set2, type = "notdam-notsire", f = c(), d = c()) {
+    # Check f & d
+    stopifnot(length(f) <= nrow(ped))
+    stopifnot(length(d) == length(f) | length(d) == 0)
     # Check type
     if (length(type) != 1) stop("type most be of length 1.")
     if (!type %in% c("notdam-notsire", "sire-sire", "dam-dam")) stop("type most be 'notdam-notsire', 'sire-sire', or 'dam-dam'.")
     # Check ped
     if (any(!c("ID", "SIRE", "DAM") %in% colnames(ped))) stop("The pedigree data frame should contain ID, SIRE, and DAM columns.")
     ped <- ped[, c("ID", "SIRE", "DAM")]
-    if (any(is.na(ped))) stop("Found NA in the pedigree.")
+    stopifnot(identical(ped$ID, 1:nrow(ped)))
+    if (any(is.na(ped$SIRE))) stop("Found NA in the ped$SIRE.")
+    if (any(is.na(ped$DAM))) stop("Found NA in the ped$DAM.")
     if (any(ped$ID == 0)) stop("Found 0 in ped$ID.")
     if (nrow(ped[duplicated(ped$ID), ]) > 0) stop("Found duplicates in ped$ID.")
     sires <- unique(ped[ped$SIRE != 0, ]$SIRE)
@@ -77,7 +98,7 @@ calcR <- function(ped, set1, set2, type = "notdam-notsire") {
     )
     ped <- rbind(ped, tmp)
     # Calculate inbreeding coefficients
-    f <- resume_inbreed(ped)
+    f <- resume_inbreed(ped, f = f, d = d)
     names(f) <- ped$ID
     # Calculate the relationship matrix
     message("Calculating numerator relationship coefficients based on Van Vleck (2007)")

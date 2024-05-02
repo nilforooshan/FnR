@@ -26,12 +26,12 @@
 #' resume_inbreed(ped, f = oldrun$f, d = oldrun$d)
 #'
 resume_inbreed <- function(ped, f = c(), d = c(), export_d = FALSE) {
+    message("Estimating inbreeding coefficients based on Meuwissen and Luo (1992)")
     # length(f) == 0 means start from scratch
     stopifnot(length(f) < nrow(ped))
     stopifnot(length(d) == length(f) | length(d) == 0)
+    stopifnot(identical(ped[, 1], 1:nrow(ped)))
     N <- nrow(ped)
-    if (ped[1, 1] != 1) stop("The first ID is not equal to 1.")
-    if (any(ped[, 1] - c(0, ped[-N, 1]) != 1)) stop("IDs are not sequential.")
     M <- length(f)
     O <- length(d)
     L <- POINT <- rep(0, N)
@@ -40,7 +40,7 @@ resume_inbreed <- function(ped, f = c(), d = c(), export_d = FALSE) {
     ped$P1 <- apply(ped[, 2:3], 1, FUN = max)
     ped$P2 <- apply(ped[, 2:3], 1, FUN = min)
     if (M > 0 & O == 0) {
-        # Update d[1:M]
+        # Calculate d[1:M]
         for (I in 1:M)
         {
             P1 <- ped$P1[I]
@@ -60,7 +60,6 @@ resume_inbreed <- function(ped, f = c(), d = c(), export_d = FALSE) {
         P2 <- ped$P2[I]
         if (P2 == 0) {
             if (P1 > 0) d[I] <- (3 - f[P1]) / 4
-            f[I] <- 0
         } else if (P1 == ped$P1[I - 1] & P2 == ped$P2[I - 1]) {
             d[I] <- d[I - 1]
             f[I] <- f[I - 1]

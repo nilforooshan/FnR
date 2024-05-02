@@ -4,7 +4,7 @@
 \alias{calcR}
 \title{Compute numerator relationship coefficients between two distinct groups of individuals}
 \usage{
-calcR(ped, set1, set2, type = "notdam-notsire")
+calcR(ped, set1, set2, type = "notdam-notsire", f = c(), d = c())
 }
 \arguments{
 \item{ped}{: A data frame with integer columns corresponding to ID, SIRE, and DAM. IDs should be sequential, starting from 1. Missing parents (SIRE and DAM) are denoted as 0.}
@@ -19,6 +19,14 @@ calcR(ped, set1, set2, type = "notdam-notsire")
 \item{\code{"sire-sire"}}{requires \code{set1} and \code{set2} individuals to be members of \code{ped$SIRE}.}
 \item{\code{"dam-dam"}}{requires \code{set1} and \code{set2} individuals to be members of \code{ped$DAM}.}
 }}
+
+\item{f}{: (Optional) If available, the vector of inbreeding coefficients for the whole pedigree (without dummy progeny) or
+from the previous calculation of inbreeding coefficients with less number of animals in the pedigree.}
+
+\item{d}{: (Optional) If available, the vector of the diagonal elements of the diagonal matrix \bold{D} in \eqn{\mathbf A = \mathbf{TDT}'}
+where \bold{A} is the numerator relationship matrix,
+for the whole pedigree (without dummy progeny) or
+from the previous calculation of inbreeding coefficients with less number of animals in the pedigree.}
 }
 \value{
 : Numerator relationship coefficients between \code{set1} and \code{set2} individuals in the form of a matrix (a partition of the numerator relationship matrix \bold{A}).
@@ -44,5 +52,15 @@ calcR(ped, set1 = 7, set2 = 8:9, type = "dam-dam")
 
 # Example 3: Calculate relationship coefficients between sires 2 & 6 and sires 4 & 10.
 calcR(ped, set1 = c(2, 6), set2 = c(4, 10), type = "sire-sire")
+
+# Example 5: Repeat example 2 with inbreeding coefficients provided.
+f <- rep(0, 12)
+f[10] <- 0.25
+f[11] <- 0.015625
+calcR(ped, set1 = 7, set2 = 8:9, type = "dam-dam", f = f)
+
+# Example 6: Repeat example 3 with inbreeding and d coefficients provided.
+d <- c(1, 1, 1, 0.5, 0.5, 1, 0.5, 0.5, 0.75, 0.5, 0.4375, 0.6875)
+calcR(ped, set1 = c(2, 6), set2 = c(4, 10), type = "sire-sire", f = f, d = d)
 
 }

@@ -143,4 +143,23 @@ Calculating numerator relationship coefficients based on Van Vleck (2007)
 6 0.0 0.750
 ```
 
+If inbreeding coefficients of the population or previous inbreeding estimates with a smaller pedigree are available, those can be used via the argument `f` to speed up the procedure.
+Similarly, if **d** coefficients are available, those can be used alongside the inbreeding coefficients via the argument `d`.
+
+```r
+f <- rep(0, 12)
+f[10] <- 0.25
+f[11] <- 0.015625
+d <- c(1, 1, 1, 0.5, 0.5, 1, 0.5, 0.5, 0.75, 0.5, 0.4375, 0.6875)
+calcR(ped, set1 = c(2, 6), set2 = c(4, 10), type = "sire-sire", f = f, d = d)
+```
+
+```
+Estimating inbreeding coefficients based on Meuwissen and Luo (1992)
+Calculating numerator relationship coefficients based on Van Vleck (2007)
+    4    10
+2 0.5 0.125
+6 0.0 0.750
+```
+
 For very large pedigree and small `set1` and `set2`, one may consider extracting a sub-pedigree by tracing the pedigree upward from `set1` and `set2` (_i.e._, `ggroups::pedup(ped, c(set1, set2))`).
