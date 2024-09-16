@@ -4,7 +4,9 @@
 
 [![R-CMD-check](https://github.com/nilforooshan/FnR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/nilforooshan/FnR/actions/workflows/R-CMD-check.yaml)
 [![cran-version-last-release](https://www.r-pkg.org/badges/version-last-release/FnR)](https://cran.r-project.org/package=FnR)
-[![cran-downloads](http://cranlogs.r-pkg.org/badges/grand-total/FnR)](https://cran.r-project.org/package=FnR)
+[![cran-downloads-total](https://cranlogs.r-pkg.org/badges/grand-total/FnR?color=green)](https://cran.r-project.org/package=FnR)
+[![cran-downloads-month](https://cranlogs.r-pkg.org/badges/last-month/FnR?color=green)](https://cran.r-project.org/package=FnR)
+[![cran-downloads-week](https://cranlogs.r-pkg.org/badges/last-week/FnR?color=green)](https://cran.r-project.org/package=FnR)
 [![github-release](https://img.shields.io/github/release/nilforooshan/FnR.svg)](https://github.com/nilforooshan/FnR)
 [![github-license](https://img.shields.io/github/license/nilforooshan/FnR.svg)](https://github.com/nilforooshan/FnR/blob/master/LICENSE.md)
 [![github-contributors](https://img.shields.io/github/contributors/nilforooshan/FnR.svg)](https://github.com/nilforooshan/FnR/graphs/contributors/)
